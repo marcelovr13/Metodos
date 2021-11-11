@@ -20,12 +20,12 @@ public class PiedraPapelTijeras {
         String resultado;
         String usuario;
         String IA;
-        double partidasJugadas = 0;
+        double partidasJugadas = 5;
         int partidasGanadasUsuario = 0;
         int partidasGanadasIa = 0;
         int empates = 0;
 
-        for (int i = 0; i <= historicoJugadas.length; i++){
+        for (int i = 0; i <= historicoJugadas.length - 1; i++){
 
             System.out.println("Elige jugada: ");
             usuario = teclado.nextLine();
@@ -36,44 +36,33 @@ public class PiedraPapelTijeras {
             if (usuario.equals("Piedra") && IA.equals("Piedra")){
                 System.out.println("Empate");
                 empates++;
-                partidasJugadas++;
             }else if (usuario.equals("Piedra") && IA.equals("Papel")){
                 System.out.println("Gana la IA");
                 partidasGanadasIa++;
-                partidasJugadas++;
             }else if (usuario.equals("Piedra") && IA.equals("Tijeras")){
                 System.out.println("Gana el usuario");
                 partidasGanadasUsuario++;
-                partidasJugadas++;
             }else if (usuario.equals("Papel") && IA.equals("Piedra")){
                 System.out.println("Gana el usuario");
                 partidasGanadasUsuario++;
-                partidasJugadas++;
             }else if (usuario.equals("Papel") && IA.equals("Papel")){
                 System.out.println("Empate");
                 empates++;
-                partidasJugadas++;
             }else if (usuario.equals("Papel") && IA.equals("Tijeras")){
                 System.out.println("Gana la IA");
                 partidasGanadasIa++;
-                partidasJugadas++;
             }else if (usuario.equals("Tijeras") && IA.equals("Piedra")){
                 System.out.println("Gana la IA");
                 partidasGanadasIa++;
-                partidasJugadas++;
             }else if (usuario.equals("Tijeras") && IA.equals("Papel")){
                 System.out.println("Gana el usuario.");
                 partidasGanadasUsuario++;
-                partidasJugadas++;
+
             }else if (usuario.equals("Tijeras") && IA.equals("Tijeras")){
                 System.out.println("Empate");
                 empates++;
-                partidasJugadas++;
             }
         }
-
-
-
 
         if (partidasGanadasIa > partidasGanadasUsuario){
             partidasJugadas = partidasGanadasIa / partidasJugadas;
