@@ -73,12 +73,21 @@ public class PiedraPapelTijeras {
         }
 
 
+
+
         if (partidasGanadasIa > partidasGanadasUsuario){
-            resultado = "Ha ganado la IA por " + partidasGanadasIa + " victorias." + " Han habido " + empates + " empates";
+            partidasJugadas = partidasGanadasIa / partidasJugadas;
+            partidasJugadas *= 100;
+            resultado = "Ha ganado la IA por " + partidasGanadasIa + " victorias." + " Han habido " + empates + " empates. " +
+                    "El porcentaje de victoria de la IA ha sido de: " + partidasJugadas + "%";
+
         }else if (partidasGanadasIa == partidasGanadasUsuario){
             resultado = "EMPATE";
         }else{
-            resultado = "Ha ganado el Usuario por " + partidasGanadasUsuario + " victorias. " + " Han habido " + empates + " empates";
+            partidasJugadas = partidasGanadasUsuario / partidasJugadas;
+            partidasJugadas *= 100;
+            resultado = "Ha ganado el Usuario por " + partidasGanadasUsuario + " victorias. " + " Han habido " + empates + " empates. " +
+                    "El porcentaje de victoria del Usuario ha sido de: " + partidasJugadas + "%";
         }
         return resultado;
     }
