@@ -3,6 +3,14 @@ package Metodos;
 import java.util.Scanner;
 
 public class PiedraPapelTijeras {
+
+    static double partidasTotales = 0;
+    static double ganadorUsuario = 0;
+    static double ganadorAI = 0;
+
+
+
+
     public static String JugadaAI(){
 
         String[] jugada = new String[3];
@@ -10,6 +18,7 @@ public class PiedraPapelTijeras {
         jugada[1] = "Papel";
         jugada[2] = "Tijeras";
         return jugada[(int)(Math.random() * jugada.length)];
+
     }
 
     public static String calculaGanador(String jugadaUsuario, String jugadaAI) {
@@ -18,16 +27,26 @@ public class PiedraPapelTijeras {
 
         if (jugadaUsuario.equals("Piedra") && jugadaAI.equals("Papel")) {
             resultado = "IA";
+            ganadorAI++;
         } else if (jugadaUsuario.equals("Piedra") && jugadaAI.equals("Tijeras")) {
             resultado = "Usuario";
+            ganadorUsuario++;
         } else if (jugadaUsuario.equals("Papel") && jugadaAI.equals("Piedra")) {
             resultado = "Usuario";
+            ganadorUsuario++;
         }else if (jugadaUsuario.equals("Papel") && jugadaAI.equals("Tijeras")){
             resultado = "IA";
+            ganadorAI++;
         }else if (jugadaUsuario.equals("Tijeras") && jugadaAI.equals("Piedra")){
             resultado = "IA";
+            ganadorAI++;
         }else if (jugadaUsuario.equals("Tijeras") && jugadaAI.equals("Papel")){
             resultado = "Usuario";
+            ganadorUsuario++;
+        }
+
+        if (!resultado.equals("Empate")){
+            partidasTotales++;
         }
         return resultado;
 
@@ -57,14 +76,17 @@ public class PiedraPapelTijeras {
         double porcentajePiedras = (piedrasJugadas / jugadas.length) * 100;
         double porcentajePapeles = (papelesJugados / jugadas.length) * 100;
         double porcentajeTijeras = (tijerasJugadas / jugadas.length) * 100;
+        double porcentajeGanadorUsuario = (ganadorUsuario / partidasTotales) * 100;
+        double porcentajeGanadorAI = (ganadorAI / partidasTotales) * 100;
 
-        porcentajes = "El porcentaje de piedras es de: " + porcentajePiedras +  "%" +
-                      " El porcentaje de papeles es de: " + porcentajePapeles + "%" +
-                      " El porcentaje de tijeras es de: " + porcentajeTijeras + "%" +
-                      " El porcentaje de victorias de Usuario es de: " + victoriaUsuario + "%" +
-                      " El porcentaje de victorias de AI es de: " + victoriaAI + "%" ;
+        porcentajes = "El porcentaje de piedras es de: " + porcentajePiedras +  "%\n" +
+                      " El porcentaje de papeles es de: " + porcentajePapeles + "%\n" +
+                      " El porcentaje de tijeras es de: " + porcentajeTijeras + "%\n" +
+                      " El porcentaje de victorias de Usuario es de: " + porcentajeGanadorUsuario + "%\n" +
+                      " El porcentaje de victorias de AI es de: " + porcentajeGanadorAI + "%\n" ;
 
         return porcentajes;
+
         }
 
 
