@@ -9,82 +9,79 @@ public class PiedraPapelTijeras {
         jugada[0] = "Piedra";
         jugada[1] = "Papel";
         jugada[2] = "Tijeras";
-
         return jugada[(int)(Math.random() * jugada.length)];
     }
 
-    public static  String calculaGanador(){
+    public static String calculaGanador(String jugadaUsuario, String jugadaAI) {
 
-        Scanner teclado = new Scanner(System.in);
-        String[] historicoJugadas = new String[5];
-        String resultado;
-        String usuario;
-        String IA;
-        double partidasJugadas = 5;
-        int partidasGanadasUsuario = 0;
-        int partidasGanadasIa = 0;
-        int empates = 0;
+        String resultado = "Empate";
 
-        for (int i = 0; i <= historicoJugadas.length - 1; i++){
-
-            System.out.println("Elige jugada: ");
-            usuario = teclado.nextLine();
-            IA = JugadaAI();
-            System.out.println("La IA ha elegido: ");
-            System.out.println(IA);
-
-            if (usuario.equals("Piedra") && IA.equals("Piedra")){
-                System.out.println("Empate");
-                empates++;
-            }else if (usuario.equals("Piedra") && IA.equals("Papel")){
-                System.out.println("Gana la IA");
-                partidasGanadasIa++;
-            }else if (usuario.equals("Piedra") && IA.equals("Tijeras")){
-                System.out.println("Gana el usuario");
-                partidasGanadasUsuario++;
-            }else if (usuario.equals("Papel") && IA.equals("Piedra")){
-                System.out.println("Gana el usuario");
-                partidasGanadasUsuario++;
-            }else if (usuario.equals("Papel") && IA.equals("Papel")){
-                System.out.println("Empate");
-                empates++;
-            }else if (usuario.equals("Papel") && IA.equals("Tijeras")){
-                System.out.println("Gana la IA");
-                partidasGanadasIa++;
-            }else if (usuario.equals("Tijeras") && IA.equals("Piedra")){
-                System.out.println("Gana la IA");
-                partidasGanadasIa++;
-            }else if (usuario.equals("Tijeras") && IA.equals("Papel")){
-                System.out.println("Gana el usuario.");
-                partidasGanadasUsuario++;
-
-            }else if (usuario.equals("Tijeras") && IA.equals("Tijeras")){
-                System.out.println("Empate");
-                empates++;
-            }
-        }
-
-        if (partidasGanadasIa > partidasGanadasUsuario){
-            partidasJugadas = partidasGanadasIa / partidasJugadas;
-            partidasJugadas *= 100;
-            resultado = "Ha ganado la IA por " + partidasGanadasIa + " victorias." + " Han habido " + empates + " empates. " +
-                    "El porcentaje de victoria de la IA ha sido de: " + partidasJugadas + "%";
-
-        }else if (partidasGanadasIa == partidasGanadasUsuario){
-            resultado = "EMPATE";
-        }else{
-            partidasJugadas = partidasGanadasUsuario / partidasJugadas;
-            partidasJugadas *= 100;
-            resultado = "Ha ganado el Usuario por " + partidasGanadasUsuario + " victorias. " + " Han habido " + empates + " empates. " +
-                    "El porcentaje de victoria del Usuario ha sido de: " + partidasJugadas + "%";
+        if (jugadaUsuario.equals("Piedra") && jugadaAI.equals("Papel")) {
+            resultado = "IA";
+        } else if (jugadaUsuario.equals("Piedra") && jugadaAI.equals("Tijeras")) {
+            resultado = "Usuario";
+        } else if (jugadaUsuario.equals("Papel") && jugadaAI.equals("Piedra")) {
+            resultado = "Usuario";
+        }else if (jugadaUsuario.equals("Papel") && jugadaAI.equals("Tijeras")){
+            resultado = "IA";
+        }else if (jugadaUsuario.equals("Tijeras") && jugadaAI.equals("Piedra")){
+            resultado = "IA";
+        }else if (jugadaUsuario.equals("Tijeras") && jugadaAI.equals("Papel")){
+            resultado = "Usuario";
         }
         return resultado;
+
     }
 
 
-    public static void main(String[] args) {
 
-        System.out.println(calculaGanador());
+    public static String muestraEstadisticas(String[] jugadas){
+
+        double piedrasJugadas = 0;
+        double papelesJugados = 0;
+        double tijerasJugadas = 0;
+        String porcentajes;
+
+        for (int i = 0; i < jugadas.length; i++){
+            if (jugadas[i].equals("Piedra"))
+                piedrasJugadas++;
+            if (jugadas[i].equals("Papel"))
+                papelesJugados++;
+            if (jugadas[i].equals("Tijeras"))
+                tijerasJugadas++;
+            }
+
+
+        double porcentajePiedras = (piedrasJugadas / jugadas.length) * 100;
+        double porcentajePapeles = (papelesJugados / jugadas.length) * 100;
+        double porcentajeTijeras = (tijerasJugadas / jugadas.length) * 100;
+
+        porcentajes = "El porcentaje de piedras es de: " + porcentajePiedras +  "%" +
+                      " El porcentaje de papeles es de: " + porcentajePapeles + "%" +
+                      " El porcentaje de tijeras es de: " + porcentajeTijeras + "%";
+
+        return porcentajes;
+        }
+
+
+
+
+    public static void main(String[] args) {
+        String[] jugadas = new String[10];
+        Scanner teclado = new Scanner(System.in);
+
+        for (int i = 0; i < jugadas.length; i++){
+            if (i % 2 == 0){
+                System.out.println("Piedra, Papel o Tijeras?");
+                jugadas[i] = teclado.nextLine();
+            }else{
+                jugadas[i] = JugadaAI();
+                String ganador = calculaGanador(jugadas[i-1], jugadas[i]);
+                System.out.printf("Usuario: %s, AI: %s -> Ganador %s\n", jugadas[i-1], jugadas[i], ganador);
+            }
+        }
+        System.out.println(muestraEstadisticas(jugadas));
+
 
     }
 }
