@@ -40,6 +40,8 @@ public class PiedraPapelTijeras {
         double piedrasJugadas = 0;
         double papelesJugados = 0;
         double tijerasJugadas = 0;
+        double victoriaUsuario = 0;
+        double victoriaAI = 0;
         String porcentajes;
 
         for (int i = 0; i < jugadas.length; i++){
@@ -58,7 +60,9 @@ public class PiedraPapelTijeras {
 
         porcentajes = "El porcentaje de piedras es de: " + porcentajePiedras +  "%" +
                       " El porcentaje de papeles es de: " + porcentajePapeles + "%" +
-                      " El porcentaje de tijeras es de: " + porcentajeTijeras + "%";
+                      " El porcentaje de tijeras es de: " + porcentajeTijeras + "%" +
+                      " El porcentaje de victorias de Usuario es de: " + victoriaUsuario + "%" +
+                      " El porcentaje de victorias de AI es de: " + victoriaAI + "%" ;
 
         return porcentajes;
         }
