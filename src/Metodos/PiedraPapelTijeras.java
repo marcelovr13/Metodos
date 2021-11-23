@@ -8,40 +8,48 @@ public class PiedraPapelTijeras {
     static double ganadorUsuario = 0;
     static double ganadorAI = 0;
 
+    public enum Jugadores{
+        USUARIO,
+        AI
+    }
+
+    public enum Jugada{
+        PIEDRA,
+        PAPEL,
+        TIJERAS
+    }
 
 
 
-    public static String JugadaAI(){
+    public static Jugada JugadaAI(){
 
-        String[] jugada = new String[3];
-        jugada[0] = "Piedra";
-        jugada[1] = "Papel";
-        jugada[2] = "Tijeras";
+        Jugada[] jugada = {Jugada.PIEDRA, Jugada.PAPEL, Jugada.TIJERAS};
+
         return jugada[(int)(Math.random() * jugada.length)];
 
     }
 
-    public static String calculaGanador(String jugadaUsuario, String jugadaAI) {
+    public static String calculaGanador(Jugada jugadaUsuario, Jugada jugadaAI) {
 
         String resultado = "Empate";
 
-        if (jugadaUsuario.equals("Piedra") && jugadaAI.equals("Papel")) {
-            resultado = "IA";
+        if (jugadaUsuario == Jugada.PIEDRA && jugadaAI == Jugada.PAPEL) {
+            resultado = String.valueOf(Jugadores.AI);
             ganadorAI++;
-        } else if (jugadaUsuario.equals("Piedra") && jugadaAI.equals("Tijeras")) {
-            resultado = "Usuario";
+        } else if (jugadaUsuario == Jugada.PIEDRA && jugadaAI == Jugada.TIJERAS) {
+            resultado = String.valueOf(Jugadores.USUARIO);
             ganadorUsuario++;
-        } else if (jugadaUsuario.equals("Papel") && jugadaAI.equals("Piedra")) {
-            resultado = "Usuario";
+        } else if (jugadaUsuario == Jugada.PAPEL && jugadaAI == Jugada.PIEDRA) {
+            resultado = String.valueOf(Jugadores.USUARIO);
             ganadorUsuario++;
-        }else if (jugadaUsuario.equals("Papel") && jugadaAI.equals("Tijeras")){
-            resultado = "IA";
+        }else if (jugadaUsuario == Jugada.PAPEL && jugadaAI == Jugada.TIJERAS){
+            resultado = String.valueOf(Jugadores.AI);
             ganadorAI++;
-        }else if (jugadaUsuario.equals("Tijeras") && jugadaAI.equals("Piedra")){
-            resultado = "IA";
+        }else if (jugadaUsuario == Jugada.TIJERAS && jugadaAI == Jugada.PIEDRA){
+            resultado = String.valueOf(Jugadores.AI);
             ganadorAI++;
-        }else if (jugadaUsuario.equals("Tijeras") && jugadaAI.equals("Papel")){
-            resultado = "Usuario";
+        }else if (jugadaUsuario == Jugada.TIJERAS && jugadaAI == Jugada.PAPEL){
+            resultado = String.valueOf(Jugadores.USUARIO);
             ganadorUsuario++;
         }
 
@@ -54,23 +62,21 @@ public class PiedraPapelTijeras {
 
 
 
-    public static String muestraEstadisticas(String[] jugadas){
+    public static String muestraEstadisticas(Jugada[] jugadas){
 
         double piedrasJugadas = 0;
         double papelesJugados = 0;
         double tijerasJugadas = 0;
-        double victoriaUsuario = 0;
-        double victoriaAI = 0;
         String porcentajes;
 
-        for (int i = 0; i < jugadas.length; i++){
-            if (jugadas[i].equals("Piedra"))
+        for (Jugada jugada : jugadas) {
+            if (jugada.equals(Jugada.PIEDRA))
                 piedrasJugadas++;
-            if (jugadas[i].equals("Papel"))
+            if (jugada.equals(Jugada.PAPEL))
                 papelesJugados++;
-            if (jugadas[i].equals("Tijeras"))
+            if (jugada.equals(Jugada.TIJERAS))
                 tijerasJugadas++;
-            }
+        }
 
 
         double porcentajePiedras = (piedrasJugadas / jugadas.length) * 100;
@@ -84,7 +90,6 @@ public class PiedraPapelTijeras {
                       " El porcentaje de tijeras es de: " + porcentajeTijeras + "%\n" +
                       " El porcentaje de victorias de Usuario es de: " + porcentajeGanadorUsuario + "%\n" +
                       " El porcentaje de victorias de AI es de: " + porcentajeGanadorAI + "%\n" ;
-
         return porcentajes;
 
         }
@@ -93,15 +98,15 @@ public class PiedraPapelTijeras {
 
 
     public static void main(String[] args) {
-        String[] jugadas = new String[10];
+        Jugada[] jugadas = new Jugada[10];
         Scanner teclado = new Scanner(System.in);
 
         for (int i = 0; i < jugadas.length; i++){
             if (i % 2 == 0){
                 System.out.println("Piedra, Papel o Tijeras?");
-                jugadas[i] = teclado.nextLine();
+                jugadas[i] = Jugada.valueOf(teclado.next().toUpperCase());
             }else{
-                jugadas[i] = JugadaAI();
+                jugadas[i] = Jugada.valueOf(String.valueOf(JugadaAI()));
                 String ganador = calculaGanador(jugadas[i-1], jugadas[i]);
                 System.out.printf("Usuario: %s, AI: %s -> Ganador %s\n", jugadas[i-1], jugadas[i], ganador);
             }
