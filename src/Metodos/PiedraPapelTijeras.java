@@ -8,9 +8,10 @@ public class PiedraPapelTijeras {
     static double ganadorUsuario = 0;
     static double ganadorAI = 0;
 
-    public enum Jugadores{
+    public enum Resultado {
         USUARIO,
-        AI
+        AI,
+        EMPATE
     }
 
     public enum Jugada{
@@ -29,31 +30,30 @@ public class PiedraPapelTijeras {
 
     }
 
-    public static String calculaGanador(Jugada jugadaUsuario, Jugada jugadaAI) {
+    public static Resultado calculaGanador(Jugada jugadaUsuario, Jugada jugadaAI) {
 
-        String resultado = "Empate";
+        Resultado resultado = Resultado.EMPATE;
 
         if (jugadaUsuario == Jugada.PIEDRA && jugadaAI == Jugada.PAPEL) {
-            resultado = String.valueOf(Jugadores.AI);
+            resultado = Resultado.AI;
             ganadorAI++;
         } else if (jugadaUsuario == Jugada.PIEDRA && jugadaAI == Jugada.TIJERAS) {
-            resultado = String.valueOf(Jugadores.USUARIO);
+            resultado = Resultado.USUARIO;
             ganadorUsuario++;
         } else if (jugadaUsuario == Jugada.PAPEL && jugadaAI == Jugada.PIEDRA) {
-            resultado = String.valueOf(Jugadores.USUARIO);
+            resultado = Resultado.USUARIO;
             ganadorUsuario++;
         }else if (jugadaUsuario == Jugada.PAPEL && jugadaAI == Jugada.TIJERAS){
-            resultado = String.valueOf(Jugadores.AI);
+            resultado = Resultado.AI;
             ganadorAI++;
         }else if (jugadaUsuario == Jugada.TIJERAS && jugadaAI == Jugada.PIEDRA){
-            resultado = String.valueOf(Jugadores.AI);
+            resultado = Resultado.AI;
             ganadorAI++;
         }else if (jugadaUsuario == Jugada.TIJERAS && jugadaAI == Jugada.PAPEL){
-            resultado = String.valueOf(Jugadores.USUARIO);
+            resultado = Resultado.USUARIO;
             ganadorUsuario++;
         }
-
-        if (!resultado.equals("Empate")){
+        if (!(resultado == Resultado.EMPATE)){
             partidasTotales++;
         }
         return resultado;
@@ -89,7 +89,7 @@ public class PiedraPapelTijeras {
                       " El porcentaje de papeles es de: " + porcentajePapeles + "%\n" +
                       " El porcentaje de tijeras es de: " + porcentajeTijeras + "%\n" +
                       " El porcentaje de victorias de Usuario es de: " + porcentajeGanadorUsuario + "%\n" +
-                      " El porcentaje de victorias de AI es de: " + porcentajeGanadorAI + "%\n" ;
+                      " El porcentaje de victorias de AI es de: " + porcentajeGanadorAI + "%\n";
         return porcentajes;
 
         }
@@ -107,7 +107,7 @@ public class PiedraPapelTijeras {
                 jugadas[i] = Jugada.valueOf(teclado.next().toUpperCase());
             }else{
                 jugadas[i] = Jugada.valueOf(String.valueOf(JugadaAI()));
-                String ganador = calculaGanador(jugadas[i-1], jugadas[i]);
+                Resultado ganador = calculaGanador(jugadas[i-1], jugadas[i]);
                 System.out.printf("Usuario: %s, AI: %s -> Ganador %s\n", jugadas[i-1], jugadas[i], ganador);
             }
         }
